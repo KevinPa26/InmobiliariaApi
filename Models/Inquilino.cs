@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InmobiliariaApi.Models
 {
-    public enum enEstadosPro
+    public enum enEstadosInq
     {
         DISPONIBLE = 1,
         NODISPONIBLE = 2,
         SUSPENDIDO = 3
     }
-    public class Propietario
+    public class Inquilino
     {
         [Key]
         [Display(Name = "ID")]
@@ -38,19 +38,17 @@ namespace InmobiliariaApi.Models
         [Display(Name = "CREADO")]
         [DataType(DataType.DateTime)]
         public System.DateTime creado { get; set; }
-        [Display(Name = "clave")]
-        public System.String clave { get; set; }
         [Display(Name = "MODIFICADO")]
         [DataType(DataType.DateTime)]
         public System.DateTime modificado { get; set;}
 
         [NotMapped]//Para EF
-        public string estadoNombre => estado > 0 ? ((enEstadosPro)estado).ToString() : "";
+        public string estadoNombre => estado > 0 ? ((enEstadosInq)estado).ToString() : "";
 
         public static IDictionary<int, string> ObtenerEstados()
         {
             SortedDictionary<int, string> roles = new SortedDictionary<int, string>();
-            Type tipoEnumEst = typeof(enEstadosPro);
+            Type tipoEnumEst = typeof(enEstadosInq);
             foreach (var valor in Enum.GetValues(tipoEnumEst))
             {
                 roles.Add((int)valor, Enum.GetName(tipoEnumEst, valor));

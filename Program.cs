@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +14,8 @@ namespace InmobiliariaApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            //CreateHostBuilder(args).Build().Run();
+            CreateKestrel(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +24,21 @@ namespace InmobiliariaApi
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        public static IWebHostBuilder CreateKestrel(string[] args)
+		{
+			var config = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+				.Build();
+			var host = new WebHostBuilder()
+				.UseConfiguration(config)
+				.UseKestrel()
+				.UseContentRoot(Directory.GetCurrentDirectory())
+				//.UseUrls("http://localhost:5000", "https://localhost:5001")//permite escuchar SOLO peticiones locales
+				.UseUrls("http://*:5000")//permite escuchar peticiones locales y remotas
+				.UseIISIntegration()
+				.UseStartup<Startup>();
+			return host;
+		}
     }
 }

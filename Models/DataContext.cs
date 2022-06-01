@@ -12,6 +12,10 @@ namespace Inmobiliaria_.Net_Core.Models
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-        public DbSet<Propietario> propietario { get; set; }
+        public DbSet<Propietario> Propietario { get; set; }
+        public DbSet<Inmueble> Inmueble { get; set; }
+        public DbSet<Inquilino> Inquilino { get; set; }
+        public DbSet<Contrato> Contrato {get; set;}
+        public DbSet<Pago> Pago {get; set;}
     }
 }

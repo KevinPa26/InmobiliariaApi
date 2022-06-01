@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kevin\\Documentos\\GitHub\\InmobiliariaApi\\InmobiliariaApi.csproj": {}
+    "C:\\Users\\kevin\\Documents\\GitHub\\InmobiliariaApi\\InmobiliariaApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kevin\\Documentos\\GitHub\\InmobiliariaApi\\InmobiliariaApi.csproj": {
+    "C:\\Users\\kevin\\Documents\\GitHub\\InmobiliariaApi\\InmobiliariaApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kevin\\Documentos\\GitHub\\InmobiliariaApi\\InmobiliariaApi.csproj",
+        "projectUniqueName": "C:\\Users\\kevin\\Documents\\GitHub\\InmobiliariaApi\\InmobiliariaApi.csproj",
         "projectName": "InmobiliariaApi",
-        "projectPath": "C:\\Users\\kevin\\Documentos\\GitHub\\InmobiliariaApi\\InmobiliariaApi.csproj",
+        "projectPath": "C:\\Users\\kevin\\Documents\\GitHub\\InmobiliariaApi\\InmobiliariaApi.csproj",
         "packagesPath": "C:\\Users\\kevin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kevin\\Documentos\\GitHub\\InmobiliariaApi\\obj\\",
+        "outputPath": "C:\\Users\\kevin\\Documents\\GitHub\\InmobiliariaApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kevin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,6 +38,18 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[5.0.4, )"
@@ -45,6 +57,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.17.0, )"
             }
           },
           "imports": [
@@ -65,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }

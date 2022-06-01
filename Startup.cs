@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Inmobiliaria_.Net_Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace InmobiliariaApi
 {
@@ -30,10 +33,60 @@ namespace InmobiliariaApi
         {
 
             services.AddControllers();
+			services.AddMvc(options =>
+			{
+				options.EnableEndpointRouting = false;
+			})
+			.AddNewtonsoftJson()
+			.AddJsonOptions(options =>
+			{
+				options.JsonSerializerOptions.IgnoreNullValues = true;
+				options.JsonSerializerOptions.WriteIndented = true;
+			});
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "InmobiliariaApi", Version = "v1" });
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>//el sitio web valida con cookie
+				{
+					options.LoginPath = "/Usuarios/Login";
+					options.LogoutPath = "/Usuarios/Logout";
+					options.AccessDeniedPath = "/Home/Restringido";
+					//options.ExpireTimeSpan = TimeSpan.FromMinutes(5);//Tiempo de expiración
+				})
+				.AddJwtBearer(options =>//la api web valida con token
+				{
+					options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+					{
+						ValidateIssuer = true,
+						ValidateAudience = true,
+						ValidateLifetime = true,
+						ValidateIssuerSigningKey = true,
+						ValidIssuer = Configuration["TokenAuthentication:Issuer"],
+						ValidAudience = Configuration["TokenAuthentication:Audience"],
+						IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(
+							Configuration["TokenAuthentication:SecretKey"])),
+					};
+					// opción extra para usar el token el hub
+					options.Events = new JwtBearerEvents
+					{
+						OnMessageReceived = context =>
+						{
+							// Read the token out of the query string
+							var accessToken = context.Request.Query["access_token"];
+							// If the request is for our hub...
+							var path = context.HttpContext.Request.Path;
+							if (!string.IsNullOrEmpty(accessToken) &&
+								path.StartsWithSegments("/chatsegurohub"))
+							{//reemplazar la url por la usada en la ruta ⬆
+								context.Token = accessToken;
+							}
+							return Task.CompletedTask;
+						}
+					};
+				});
 
             services.AddDbContext<DataContext>(
 				options => options.UseMySql(

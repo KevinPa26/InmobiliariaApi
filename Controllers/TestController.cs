@@ -23,7 +23,7 @@ namespace InmobiliariaApi.Controllers
 		}
 		// GET: api/<controller>
 		[HttpGet]
-		public async Task<IActionResult> Get()
+		public IActionResult Get()
 		{
 			try
 			{
@@ -48,7 +48,7 @@ namespace InmobiliariaApi.Controllers
 		[HttpGet("{id}")]
 		public IActionResult Get(int id)
 		{
-			return Ok(Contexto.propietario.Find(id));
+			return Ok(Contexto.Propietario.Find(id));
 		}
 
         /*
